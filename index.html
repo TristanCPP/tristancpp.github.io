@@ -1,1 +1,95 @@
-"Hello World" 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tristan Garner - Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="font-sans">
+    <header class="bg-gray-800 text-white p-4">
+        <nav class="container mx-auto flex justify-start space-x-20">
+            <a href="#home" class="hover:text-gray-400">Home</a>
+            <a href="#about" class="hover:text-gray-400">About Me</a>
+            <!-- <a href="#projects" class="hover:text-gray-400">Projects</a>
+            <a href="#contact" class="hover:text-gray-400">Contact</a> -->
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="flex flex-col items-center justify-center bg-gray-100 text-center p-4 sm:p-10 md:p-20 lg:p-40">
+            <h1 class="text-5xl font-bold">Hello, I'm Tristan</h1>
+            <br>
+            <img src="images/TnT.jpg" alt="Tnt" class="mt-4 mx-auto w-full sm:w-3/4 md:w-1/2 lg:w-1/2 xl:w-1/4 h-auto object-scale-down">
+        </section>
+        
+        <section id="about" class="py-12 bg-white px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold mb-4">About Me</h2>
+                <p>Aspiring software developer currently pursuing a B.S. in Computer Science at Southern Arkansas University. 
+                Skilled in Python, Java, C++, Dart, PHP, SQL, and familiar with MYSQL. Excels in problem-solving, analytical skills, 
+                and attention to detail. Seeking an internship to apply technical skills in a practical environment, further develop 
+                programming practices, enhance project management abilities, and contribute to impactful software solutions.</p>
+                <br>
+                <p>Languages: Java, Python, C/C++, SQL, Dart, PHP, HTML, CSS </p>
+                <p>Frameworks: Flask, WordPress, Flutter</p>
+                <p>Developer Tools: Git, VS Code, Visual Studio, PyCharm, IntelliJ, Android Studio, PHP Storm</p>
+                <br>
+                <p>Interests: 💻Programming, 🎮Gaming (Playing Helldivers 2 at the moment), ⛰️🐶 and going on hikes with my wife and dogs! </p>
+            </div>
+        </section>
+
+        <section id="projects" class="py-12 bg-gray-100 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold mb-4">Projects</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Project Card 1 -->
+                    <div class="flex flex-col justify-between rounded overflow-hidden shadow-lg bg-white">
+                        <img class="w-full h-96 object-cover" src="images\cpu.jpg" alt="Hack Assembler">
+                        <div class="px-6 py-4">
+                            <div class="font-bold text-xl mb-2">Hack Assembler</div>
+                            <p class="text-gray-700 text-base">
+                                - Developed an assembler for the Hack assembly language, translating Hack assembly code into machine language<br>
+                                - Utilized advanced C++ features including STL maps and vectors, file I/O operations, and string manipulation to efficiently process assembly instructions<br>
+                                - Implemented multi-pass processing to handle symbols, loops, and variable declarations, ensuring a comprehensive analysis and conversion of the Hack assembly code
+                            </p>
+                        </div>
+                        <div class="px-6 pt-4 pb-2">
+                            <a href="https://github.com/TristanACG/HackAssembler" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">View Project</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Project Card 2 -->
+                    <div class="flex flex-col justify-between rounded overflow-hidden shadow-lg bg-white">
+                        <img class="w-full h-96 object-cover" src="images\Public-Speaking-Theres-an-App-for-That_SOURCE_stocksy.jpg" alt="Hack Assembler">
+                        <div class="px-6 py-4">
+                            <div class="font-bold text-xl mb-2">Time Tracker Mobile App</div>
+                            <p class="text-gray-700 text-base">
+                                - Developed a time tracker using Flutter and Dart, aimed at offering a user-friendly interface for managing time spent on various activities<br>
+                                - Employed best practices in Flutter development, such as using state management solutions for data flow and UI updates, ensuring the application runs smoothly across a wide range of devices<br>
+                                - Designed and implemented a settings feature enabling users to customize the application according to their preferences, including themes, notification settings, and time formats
+                                
+                            </p>
+                        </div>
+                        <div class="px-6 pt-4 pb-2">
+                            <a href="#" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">View Project</a>
+                        </div>
+                    </div>
+                    <!-- Future Projects -->
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="py-12 bg-white px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold mb-4">Contact</h2>
+                <p>501-363-2733 | tristangarner20@gmail.com | <a href="https://www.linkedin.com/in/tristanacg/">linkedin.com/in/tristanacg</a> | <a href="https://github.com/TristanACG">github.com/tristanacg</a></p><br>
+                <a href="files\Tristan_Garner_2024.pdf" download class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download Resume</a>
+            </div>
+        </section>
+    </main>
+    <footer class="bg-gray-800 text-white p-4 text-center">
+        © 2024 Tristan Garner. All rights reserved.
+    </footer>
+</body>
+</html>
