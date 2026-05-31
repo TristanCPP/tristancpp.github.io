@@ -1,95 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tristan Garner - Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tristan Garner | Technology Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Mono:wght@400;500&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    /* Light taupe/linen backgrounds */
+    --bg:         #f5f0e8;
+    --bg-card:    #edeae0;
+    --bg-raised:  #e4e0d4;
+    /* Borders */
+    --border:     rgba(160,150,130,0.25);
+    --border-hi:  rgba(55,130,65,0.35);
+    /* FIS green accent — used sparingly */
+    --green:      #2e8b3a;
+    --green-light:#4bcd3e;
+    --green-dim:  rgba(46,139,58,0.09);
+    --green-glow: rgba(46,139,58,0.17);
+    /* Text */
+    --ink:        #1e1e1a;
+    --ink-mid:    #3d3d35;
+    --ink-muted:  #7a7668;
+    /* Type */
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans:  'Nunito', sans-serif;
+    --mono:  'DM Mono', monospace;
+    --max:   980px;
+    --ease:  0.25s cubic-bezier(0.4,0,0.2,1);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--ink-mid); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 2.5rem;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--mono); font-size: 0.9rem; color: var(--green); letter-spacing: 0.06em; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.82rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-muted); text-decoration: none; transition: color var(--ease); }
+  .nav-links a:hover { color: var(--green); }
+
+  /* HERO */
+  .hero-wrap { max-width: var(--max); margin: 0 auto; padding: 7rem 2.5rem 5rem; min-height: 100vh; display: flex; align-items: center; }
+  .hero-inner { display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center; width: 100%; }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 0.75rem; color: var(--green);
+    letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--green); }
+  h1 { font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 5rem); line-height: 1.06; color: var(--ink); margin-bottom: 1.25rem; }
+  h1 em { font-style: italic; color: var(--green); }
+  .hero-bio { font-size: 1.05rem; font-weight: 400; color: var(--ink-mid); max-width: 520px; margin-bottom: 2.25rem; line-height: 1.85; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* PHOTO */
+  .hero-photo-wrap { flex-shrink: 0; }
+  .photo-frame {
+    width: 220px; height: 260px; border-radius: 10px; overflow: hidden;
+    border: 2px solid var(--border-hi); position: relative; background: var(--bg-raised);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.75rem; padding: 1.5rem; text-align: center;
+  }
+  .photo-placeholder svg { width: 48px; height: 48px; stroke: var(--ink-muted); }
+  .photo-placeholder p { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-muted); line-height: 1.5; letter-spacing: 0.04em; }
+  .photo-corner { position: absolute; bottom: 0; right: 0; width: 28px; height: 28px; border-top: 2px solid var(--green); border-left: 2px solid var(--green); transform: translate(50%,50%) rotate(180deg); }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.7rem 1.6rem; border-radius: 5px;
+    font-family: var(--sans); font-size: 0.88rem; font-weight: 600;
+    text-decoration: none; transition: all var(--ease); cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--green); color: #fff; }
+  .btn-primary:hover { background: #256e2e; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,139,58,0.28); }
+  .btn-outline { background: transparent; color: var(--green); border: 1px solid rgba(46,139,58,0.4); }
+  .btn-outline:hover { background: var(--green-dim); border-color: var(--green); transform: translateY(-2px); }
+
+  /* SECTIONS */
+  section { padding: 5rem 2.5rem; max-width: var(--max); margin: 0 auto; }
+  .section-label {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 0.6rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--green); }
+  h2 { font-family: var(--serif); font-size: clamp(1.9rem, 4vw, 2.8rem); color: var(--ink); line-height: 1.15; margin-bottom: 2.75rem; }
+  .divider { height: 1px; background: linear-gradient(to right, rgba(46,139,58,0.2), transparent); margin: 0 2.5rem; max-width: var(--max); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--ink-mid); font-size: 1.03rem; line-height: 1.88; margin-bottom: 1.2rem; }
+  .about-text p strong { color: var(--ink); font-weight: 600; }
+  .skills-group { margin-bottom: 1.75rem; }
+  .skills-group-label { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.65rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .tag {
+    display: inline-block; padding: 0.28rem 0.75rem; border-radius: 3px;
+    font-family: var(--mono); font-size: 0.75rem;
+    background: var(--green-dim); color: var(--green);
+    border: 1px solid rgba(46,139,58,0.2); transition: all var(--ease);
+  }
+  .tag:hover { background: var(--green-glow); border-color: rgba(46,139,58,0.45); }
+  .edu-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1rem 1.2rem; margin-bottom: 0.65rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .edu-card h4 { font-size: 0.88rem; color: var(--ink); font-weight: 600; margin-bottom: 0.2rem; }
+  .edu-school { font-family: var(--mono); font-size: 0.75rem; color: var(--green); }
+  .edu-meta { font-family: var(--mono); font-size: 0.68rem; color: var(--ink-muted); margin-top: 0.25rem; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 1.75rem; }
+  .exp-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-left: 3px solid var(--green); border-radius: 0 8px 8px 0;
+    padding: 1.6rem 1.9rem; transition: all var(--ease);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+  .exp-card:hover { border-color: rgba(46,139,58,0.4); transform: translateX(4px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.3rem; flex-wrap: wrap; gap: 0.4rem; }
+  .exp-title { font-size: 1rem; color: var(--ink); font-weight: 600; }
+  .exp-date { font-family: var(--mono); font-size: 0.7rem; color: var(--green); letter-spacing: 0.05em; white-space: nowrap; }
+  .exp-company { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 0.9rem; }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li { font-size: 0.88rem; color: var(--ink-mid); padding: 0.28rem 0; padding-left: 1.1rem; position: relative; line-height: 1.65; }
+  .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 0.62rem; top: 0.44rem; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+  .project-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.75rem; transition: all var(--ease); position: relative; overflow: hidden;
+    display: flex; flex-direction: column; box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--green); transform: scaleX(0); transform-origin: left; transition: transform var(--ease);
+  }
+  .project-card:hover { border-color: rgba(46,139,58,0.35); transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,0.1); }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-num { font-family: var(--mono); font-size: 0.68rem; color: var(--green); letter-spacing: 0.1em; margin-bottom: 0.85rem; opacity: 0.8; }
+  .project-card h3 { font-family: var(--serif); font-size: 1.3rem; color: var(--ink); margin-bottom: 0.65rem; line-height: 1.2; }
+  .project-card > p { font-size: 0.87rem; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1.1rem; }
+  .project-bullets { list-style: none; margin-bottom: 1.4rem; flex: 1; }
+  .project-bullets li { font-size: 0.83rem; color: var(--ink-muted); padding: 0.28rem 0; padding-left: 1rem; position: relative; line-height: 1.6; }
+  .project-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: 0.62rem; top: 0.44rem; }
+  .project-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 1.1rem; border-top: 1px solid var(--border); margin-top: auto; }
+  .project-tech { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+  .tech-badge { font-family: var(--mono); font-size: 0.66rem; padding: 0.18rem 0.48rem; border-radius: 2px; background: var(--bg-raised); color: var(--ink-muted); border: 1px solid var(--border); }
+  .project-link { display: inline-flex; align-items: center; gap: 0.35rem; font-family: var(--mono); font-size: 0.73rem; color: var(--green); text-decoration: none; letter-spacing: 0.05em; transition: gap var(--ease); }
+  .project-link:hover { gap: 0.6rem; }
+  .project-link svg { width: 13px; height: 13px; }
+
+  /* CONTACT */
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .contact-text p { font-size: 1.03rem; color: var(--ink-mid); line-height: 1.88; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.9rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.2rem;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px;
+    text-decoration: none; transition: all var(--ease); color: inherit;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .contact-item:hover { border-color: rgba(46,139,58,0.35); background: var(--bg-raised); transform: translateX(4px); box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+  .contact-icon {
+    width: 34px; height: 34px; border-radius: 50%; background: var(--green-dim);
+    border: 1px solid rgba(46,139,58,0.22); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .contact-icon svg { width: 15px; height: 15px; stroke: var(--green); fill: none; }
+  .contact-item-label { font-size: 0.68rem; font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); display: block; }
+  .contact-item-value { font-size: 0.88rem; color: var(--ink-mid); display: block; margin-top: 0.08rem; }
+
+  footer { text-align: center; padding: 2rem; font-family: var(--mono); font-size: 0.7rem; color: var(--ink-muted); letter-spacing: 0.08em; border-top: 1px solid var(--border); }
+
+  .fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp 0.65s cubic-bezier(0.4,0,0.2,1) forwards; }
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  .d1 { animation-delay: 0.08s; } .d2 { animation-delay: 0.18s; } .d3 { animation-delay: 0.3s; } .d4 { animation-delay: 0.42s; } .d5 { animation-delay: 0.54s; }
+
+  @media (max-width: 720px) {
+    nav { padding: 1rem 1.25rem; } .nav-links { gap: 1.2rem; }
+    section { padding: 4rem 1.25rem; } .hero-wrap { padding: 5.5rem 1.25rem 3rem; }
+    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-photo-wrap { order: -1; display: flex; justify-content: center; }
+    .photo-frame { width: 160px; height: 190px; }
+    .about-grid, .projects-grid, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .exp-header { flex-direction: column; }
+  }
+</style>
 </head>
-<body class="font-sans">
-    <header class="bg-gray-800 text-white p-4">
-        <nav class="container mx-auto flex justify-start space-x-20">
-            <a href="#home" class="hover:text-gray-400">Home</a>
-            <a href="#about" class="hover:text-gray-400">About Me</a>
-            <!-- <a href="#projects" class="hover:text-gray-400">Projects</a>
-            <a href="#contact" class="hover:text-gray-400">Contact</a> -->
-        </nav>
-    </header>
+<body>
 
-    <main>
-        <section id="home" class="flex flex-col items-center justify-center bg-gray-100 text-center p-4 sm:p-10 md:p-20 lg:p-40">
-            <h1 class="text-5xl font-bold">Hello, I'm Tristan</h1>
-            <br>
-            <img src="images/TnT.jpg" alt="Tnt" class="mt-4 mx-auto w-full sm:w-3/4 md:w-1/2 lg:w-1/2 xl:w-1/4 h-auto object-scale-down">
-        </section>
-        
-        <section id="about" class="py-12 bg-white px-4">
-            <div class="container mx-auto">
-                <h2 class="text-4xl font-bold mb-4">About Me</h2>
-                <p>Aspiring software developer currently pursuing a B.S. in Computer Science at Southern Arkansas University. 
-                Skilled in Python, Java, C++, Dart, PHP, SQL, and familiar with MYSQL. Excels in problem-solving, analytical skills, 
-                and attention to detail. Seeking an internship to apply technical skills in a practical environment, further develop 
-                programming practices, enhance project management abilities, and contribute to impactful software solutions.</p>
-                <br>
-                <p>Languages: Java, Python, C/C++, SQL, Dart, PHP, HTML, CSS </p>
-                <p>Frameworks: Flask, WordPress, Flutter</p>
-                <p>Developer Tools: Git, VS Code, Visual Studio, PyCharm, IntelliJ, Android Studio, PHP Storm</p>
-                <br>
-                <p>Interests: 💻Programming, 🎮Gaming (Playing Helldivers 2 at the moment), ⛰️🐶 and going on hikes with my wife and dogs! </p>
-            </div>
-        </section>
+<nav>
+  <a class="nav-logo" href="#home">TG.dev</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-        <section id="projects" class="py-12 bg-gray-100 px-4">
-            <div class="container mx-auto">
-                <h2 class="text-4xl font-bold mb-4">Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Project Card 1 --> <!-- UPDATE THIS PROJECT WITH BETTER MORE RECENT PROJECT -->
-                    <div class="flex flex-col justify-between rounded overflow-hidden shadow-lg bg-white">
-                        <img class="w-full h-96 object-cover" src="images\cpu.jpg" alt="Hack Assembler">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">Hack Assembler</div>
-                            <p class="text-gray-700 text-base">
-                                - Developed an assembler for the Hack assembly language, translating Hack assembly code into machine language<br>
-                                - Utilized advanced C++ features including STL maps and vectors, file I/O operations, and string manipulation to efficiently process assembly instructions<br>
-                                - Implemented multi-pass processing to handle symbols, loops, and variable declarations, ensuring a comprehensive analysis and conversion of the Hack assembly code
-                            </p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <a href="https://github.com/TristanACG/HackAssembler" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">View Project</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Project Card 2 -->
-                    <div class="flex flex-col justify-between rounded overflow-hidden shadow-lg bg-white">
-                        <img class="w-full h-96 object-cover" src="images\Public-Speaking-Theres-an-App-for-That_SOURCE_stocksy.jpg" alt="Hack Assembler">
-                        <div class="px-6 py-4">
-                            <div class="font-bold text-xl mb-2">Time Tracker Mobile App</div>
-                            <p class="text-gray-700 text-base">
-                                - Developed a time tracker using Flutter and Dart, aimed at offering a user-friendly interface for managing time spent on various activities<br>
-                                - Employed best practices in Flutter development, such as using state management solutions for data flow and UI updates, ensuring the application runs smoothly across a wide range of devices<br>
-                                - Designed and implemented a settings feature enabling users to customize the application according to their preferences, including themes, notification settings, and time formats
-                                
-                            </p>
-                        </div>
-                        <div class="px-6 pt-4 pb-2">
-                            <a href="https://github.com/TristanACG/Time-Tracker-App" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">View Project</a>
-                        </div>
-                    </div>
-                    <!-- Future Projects -->
-                </div>
-            </div>
-        </section>
-        
-        <section id="contact" class="py-12 bg-white px-4">
-            <div class="container mx-auto">
-                <h2 class="text-4xl font-bold mb-4">Contact</h2>
-                <p>501-363-2733 | tristangarner20@gmail.com | <a href="https://www.linkedin.com/in/tristancpp/">linkedin.com/in/tristancpp</a> | <a href="https://github.com/TristanCPP">github.com/tristancpp</a></p><br>
-                <a href="files\Tristan_Garner_2024.pdf" download class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download Resume</a>
-            </div>
-        </section>
-    </main>
-    <footer class="bg-gray-800 text-white p-4 text-center">
-        © 2024 Tristan Garner. All rights reserved.
-    </footer>
+<!-- HERO -->
+<div id="home">
+  <div class="hero-wrap">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <p class="hero-eyebrow fade-up d1">Technology Analyst at FIS Global</p>
+        <h1 class="fade-up d2">Hi, I'm<br><em>Tristan Garner</em></h1>
+        <p class="hero-bio fade-up d3">
+          I work at the intersection of business and technology, helping financial systems run
+          reliably, making sense of data, and translating complex requirements into solutions
+          that actually work. Based in Benton, AR.
+        </p>
+        <div class="hero-cta fade-up d4">
+          <a href="#experience" class="btn btn-primary">View my experience</a>
+          <a href="files/Tristan_Garner_Resume.docx" class="btn btn-outline" download>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download resume
+          </a>
+        </div>
+      </div>
+      <div class="hero-photo-wrap fade-up d5">
+        <div class="photo-frame">
+          <!--
+            TO ADD YOUR PHOTO:
+            Replace the photo-placeholder div below with:
+            <img src="images/your-photo.jpg" alt="Tristan Garner">
+            Then upload your photo to the images/ folder in your repo.
+          -->
+          <div class="photo-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.2">
+              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-linecap="round"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-linecap="round"/>
+            </svg>
+            <p>Add your photo here. See the HTML comment above for instructions.</p>
+          </div>
+          <div class="photo-corner"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">Background</p>
+  <h2>A little about me</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a <strong>Technology Analyst at FIS Global</strong>, based in <strong>Benton, Arkansas</strong>,
+        where I live with my wife and our three dogs. I have always been drawn to figuring out how
+        things work, whether that is a financial system, a data pipeline, or the mechanics of a
+        tennis serve. That curiosity is what pulled me into technology.
+      </p>
+      <p>
+        My day-to-day involves a lot of what I genuinely enjoy: digging into requirements,
+        working alongside engineers and stakeholders, chasing down the root cause of a tricky
+        production issue, and making sure enterprise systems do exactly what they are supposed to do.
+        Having both a technical background and a business degree means I can hold my own in
+        both conversations, and I find that combination pretty useful.
+      </p>
+      <p>
+        Outside of work I stay active on the tennis court, unwind with some video games, and spend
+        weekends exploring trails around Arkansas with the dogs. Always happy to swap hiking
+        recommendations if you have good ones.
+      </p>
+    </div>
+    <div>
+      <div class="skills-group">
+        <p class="skills-group-label">Analysis and Process</p>
+        <div class="skill-tags">
+          <span class="tag">Requirements Gathering</span>
+          <span class="tag">Functional Analysis</span>
+          <span class="tag">System Testing</span>
+          <span class="tag">Root Cause Analysis</span>
+          <span class="tag">Process Documentation</span>
+          <span class="tag">Agile / Scrum</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <p class="skills-group-label">Technical Tools</p>
+        <div class="skill-tags">
+          <span class="tag">SQL</span>
+          <span class="tag">Python</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">Power Apps</span>
+          <span class="tag">Git</span>
+          <span class="tag">SDLC</span>
+          <span class="tag">CI/CD</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <p class="skills-group-label">Education</p>
+        <div class="edu-card">
+          <h4>B.S. Computer Science &#183; 4.0 GPA</h4>
+          <p class="edu-school">Southern Arkansas University</p>
+          <p class="edu-meta">Aug 2023 to May 2025 &#183; Database Mgmt, Data Modeling, Software Engineering</p>
+        </div>
+        <div class="edu-card">
+          <h4>B.B.A. Business Administration &#183; 3.8 GPA</h4>
+          <p class="edu-school">Henderson State University</p>
+          <p class="edu-meta">Aug 2014 to Dec 2018 &#183; Business Info Systems, Operations Mgmt</p>
+        </div>
+        <div class="edu-card">
+          <h4>A.S. Computer Science &#183; 4.0 GPA</h4>
+          <p class="edu-school">National Park College</p>
+          <p class="edu-meta">Aug 2021 to May 2023 &#183; Data Structures, Technical Writing</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Career</p>
+  <h2>Experience</h2>
+  <div class="exp-list">
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <span class="exp-title">Technology Analyst</span>
+        <span class="exp-date">June 2025 to Present</span>
+      </div>
+      <p class="exp-company">FIS Global &#183; Little Rock, AR</p>
+      <ul class="exp-bullets">
+        <li>Support enterprise banking applications and integrated financial systems for Ally Bank, ensuring system reliability, data integrity, and smooth deployment of platform enhancements</li>
+        <li>Analyze business and operational requirements to deliver functional technology solutions aligned with customer and organizational needs</li>
+        <li>Collaborate with engineering, QA, and business stakeholders to validate workflows, troubleshoot defects, and resolve production issues across environments</li>
+        <li>Configure, test, and validate application functionality during upgrades, enhancements, and implementations</li>
+        <li>Investigate production issues, perform root cause analysis, and resolve application defects and data inconsistencies</li>
+        <li>Participate in Agile sprints including planning, standups, testing coordination, and iterative delivery</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <span class="exp-title">Information Technology Support Intern</span>
+        <span class="exp-date">Aug 2022 to Jan 2023</span>
+      </div>
+      <p class="exp-company">National Park College &#183; Hot Springs, AR</p>
+      <ul class="exp-bullets">
+        <li>Diagnosed and resolved hardware, software, and connectivity issues for faculty, staff, and students</li>
+        <li>Installed, configured, and maintained software and peripheral devices across campus workstations</li>
+        <li>Supported users with troubleshooting and system navigation while maintaining high customer satisfaction</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <span class="exp-title">Financial Services Representative</span>
+        <span class="exp-date">July 2019 to Feb 2021</span>
+      </div>
+      <p class="exp-company">Arvest Bank &#183; Hot Springs, AR</p>
+      <ul class="exp-bullets">
+        <li>Resolved customer account and transaction issues across multiple enterprise financial systems</li>
+        <li>Performed detailed account research and clearly communicated technical and financial information to customers</li>
+        <li>Maintained accuracy and compliance while processing deposits, payments, wires, and account servicing requests</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Portfolio</p>
+  <h2>Things I've built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <p class="project-num">01 / Machine Learning</p>
+      <h3>Heart Risk AI Predictor</h3>
+      <p>A machine learning model that predicts cardiovascular risk from patient health data, combining data analysis, model evaluation, and real clinical insight.</p>
+      <ul class="project-bullets">
+        <li>Built and compared classification models including Logistic Regression and Random Forest on clinical datasets</li>
+        <li>Cleaned and engineered features from patient health indicators for model input</li>
+        <li>Evaluated accuracy, precision, and recall to surface the most meaningful predictions</li>
+        <li>A solid example of applying data analysis skills to real-world decision support</li>
+      </ul>
+      <div class="project-footer">
+        <div class="project-tech">
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">scikit-learn</span>
+          <span class="tech-badge">Pandas</span>
+        </div>
+        <a href="https://github.com/TristanCPP" target="_blank" rel="noopener" class="project-link">
+          GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <p class="project-num">02 / Systems</p>
+      <h3>Hack Assembler</h3>
+      <p>A full two-pass assembler for the Hack assembly language that translates symbolic code into binary machine instructions, built in C++.</p>
+      <ul class="project-bullets">
+        <li>Multi-pass design handles symbols, labels, and variable declarations across stages</li>
+        <li>Used STL maps and vectors for efficient instruction lookup throughout</li>
+        <li>Robust file I/O, string parsing, and validation from start to finish</li>
+      </ul>
+      <div class="project-footer">
+        <div class="project-tech">
+          <span class="tech-badge">C++</span>
+          <span class="tech-badge">STL</span>
+        </div>
+        <a href="https://github.com/TristanACG/HackAssembler" target="_blank" rel="noopener" class="project-link">
+          GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <p class="project-num">03 / Mobile</p>
+      <h3>Time Tracker App</h3>
+      <p>A cross-platform mobile app for tracking time across activities, built with Flutter and Dart with a clean, user-first interface.</p>
+      <ul class="project-bullets">
+        <li>Designed and built a customizable settings system covering themes, notifications, and time formats</li>
+        <li>Managed application state for smooth, reactive UI updates across Android and iOS</li>
+        <li>Followed Flutter best practices to ensure broad device compatibility</li>
+      </ul>
+      <div class="project-footer">
+        <div class="project-tech">
+          <span class="tech-badge">Flutter</span>
+          <span class="tech-badge">Dart</span>
+        </div>
+        <a href="https://github.com/TristanACG/Time-Tracker-App" target="_blank" rel="noopener" class="project-link">
+          GitHub <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Get in touch</p>
+  <h2>Let's talk</h2>
+  <div class="contact-inner">
+    <div class="contact-text">
+      <p>
+        I'm always open to connecting with other folks in the technology and data space.
+        Whether you want to talk shop, explore a collaboration, or just say hello, feel
+        free to reach out. I try to reply promptly.
+      </p>
+      <br>
+      <a href="files/Tristan_Garner_Resume.docx" class="btn btn-primary" download style="display:inline-flex;align-items:center;gap:0.5rem;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download resume
+      </a>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:tristangarner20@gmail.com" class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><span class="contact-item-label">Email</span><span class="contact-item-value">tristangarner20@gmail.com</span></div>
+      </a>
+      <a href="tel:5013632733" class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><span class="contact-item-label">Phone</span><span class="contact-item-value">501-363-2733</span></div>
+      </a>
+      <a href="https://www.linkedin.com/in/tristancpp/" target="_blank" rel="noopener" class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" rx="1" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><span class="contact-item-label">LinkedIn</span><span class="contact-item-value">linkedin.com/in/tristancpp</span></div>
+      </a>
+      <a href="https://github.com/TristanCPP" target="_blank" rel="noopener" class="contact-item">
+        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><span class="contact-item-label">GitHub</span><span class="contact-item-value">github.com/TristanCPP</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>&copy; 2025 Tristan Garner &#183; Benton, AR</footer>
+
 </body>
 </html>
